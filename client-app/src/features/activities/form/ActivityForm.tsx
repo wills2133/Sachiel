@@ -5,9 +5,11 @@ import { Activity } from '../../../models/activity';
 interface Prop {
     activity: Activity | undefined;
     closeForm: () => void;
+    createOrEdit: (activity: Activity) => void;
+    submitting: boolean;
 }
 
-export default function ActivityForm({activity: selectedForm, closeForm}: Prop) {
+export default function ActivityForm({activity: selectedForm, closeForm, createOrEdit, submitting}: Prop) {
     const initailState = selectedForm ?? {
         id: '',
         title: '',
@@ -33,12 +35,12 @@ export default function ActivityForm({activity: selectedForm, closeForm}: Prop) 
         <Segment clearing>
             <Form onSubmit={handleSubmit} autoComplete='off'>
                 <Form.Input placeholder='title' value={activity.title} name='title' onChange={handleInputChange}/>
-                <Form.Input placeholder='date' value={activity.date} name='date' onChange={handleInputChange} />
+                <Form.Input type='date' placeholder='date' value={activity.date} name='date' onChange={handleInputChange} />
                 <Form.TextArea placeholder='description' value={activity.description} name='description' onChange={handleInputChange} />
                 <Form.Input placeholder='venue' value={activity.venue} name='venue' onChange={handleInputChange} />
                 <Form.Input placeholder='city' value={activity.city} name='city' onChange={handleInputChange} />
                 <Form.Input placeholder='category' value={activity.category} name='category' onChange={handleInputChange} />
-                <Button floated='right' positive type='submit' content='Submit' />
+                <Button loading={submitting} floated='right' positive type='submit' content='Submit' onClick={() => createOrEdit(activity)} />
                 <Button floated='right' type='button' content='Cancel' onClick={() => closeForm()} />
             </Form>
         </Segment>
