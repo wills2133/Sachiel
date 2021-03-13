@@ -10,21 +10,42 @@ interface Props {
     selectedActivity: Activity | undefined;
     selectActivity: (id: string) => void;
     cancelSelectActivity: () => void;
+    editMode: boolean;
+    openForm: (id: string) => void; // no need optional
+    closeForm: () => void;
+    deleteActivity: (id: string) => void;
 }
 // export default function ActivityDashboard(props: Props) {
-export default function ActivityDashboard({activities,
-    selectedActivity, selectActivity, cancelSelectActivity,}: Props) {
+export default function ActivityDashboard({
+        activities,
+        selectedActivity,
+        selectActivity,
+        cancelSelectActivity,
+        editMode,
+        openForm,
+        closeForm,
+        deleteActivity
+    }: Props) {
     return (
         <Grid>
             <Grid.Column width='10'>
-                <ActivityList activities={activities} selectActivity={selectActivity} />
+                <ActivityList
+                    activities={activities}
+                    selectActivity={selectActivity}
+                    deleteActivity={deleteActivity}
+                />
                 {/* <List>
                     {props.activities.map((activity) => {}}
                 </List> */}
             </Grid.Column>
             <Grid.Column width='6'>
-                {selectedActivity && <ActivitiesDetails activity={selectedActivity} cancelSelectActivity={cancelSelectActivity} />}
-                <ActivityForm />
+                {selectedActivity && !editMode &&
+                <ActivitiesDetails
+                    activity={selectedActivity}
+                    cancelSelectActivity={cancelSelectActivity}
+                    openForm={openForm}
+                />}
+                {editMode && <ActivityForm closeForm={closeForm} activity={selectedActivity}/>}
             </Grid.Column>
         </Grid>
     )
