@@ -40,7 +40,7 @@ export default function ActivityList({activities, selectActivity, submitting, de
                                     floated='right'
                                     content='Delete'
                                     color='red'
-                                    loading={submitting && target == activity.id}
+                                    loading={submitting && target === activity.id}
                                     onClick={(e) => handleDelete(e, activity.id)} />
                                 <Label basic content={activity.category} />
                             </Item.Extra>
