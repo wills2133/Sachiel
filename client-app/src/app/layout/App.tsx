@@ -16,25 +16,7 @@ function App() {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [selectedActivity, setSlectedActivity] = useState<Activity | undefined>(undefined);
   const [editMode, setEditMode] = useState(false); // for primary type no need to declare type
-  const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
-
-  function handleSelectActivity(id: string) {
-    setSlectedActivity(activities.find((x) => x.id === id));
-  }
-
-  function handleCancelActivity() {
-    setSlectedActivity(undefined);
-  }
-
-  function handleFormOpen(id?: string) {
-    id ? handleSelectActivity(id) : handleCancelActivity()
-    setEditMode(true);
-  }
-
-  function handleFormClose() {
-    setEditMode(false);
-  }
 
   function handleCreateOrEditActivity(activity: Activity) {
     setSubmitting(true);
@@ -68,35 +50,17 @@ function App() {
   }
 
   useEffect(() => {
-    // axios
-    // .get<Activity[]>('http://localhost:5000/api/activities') // typeof response.data is Activity
-    agent.Activities.list()
-    .then((response) => {
-      let Activities: Activity[] = [];
-      response.forEach((activity) => {
-        activity.date = activity.date.split('T')[0];
-        Activities.push(activity)
-      })
-      setActivities(Activities);
-      setLoading(false);
-    });
-  }, [])
+    activityStore.loadActivities();
+  }, [activityStore]) // activityStore as depandancy
 
-  if(loading) return <LoadingComponent content = 'Loading App' />;
+  if(activityStore.loadingInitial) return <LoadingComponent content = 'Loading App' />;
 
   return (
     <>
-      <NavBar openForm={handleFormOpen} />
+      <NavBar />
       <Container style={{margin: '7em'}}>
-        <h2>{activityStore.title}</h2>
         <ActivityDashboard
-          activities={activities}
-          selectedActivity={selectedActivity}
-          selectActivity={handleSelectActivity}
-          cancelSelectActivity={handleCancelActivity}
-          editMode={editMode}
-          openForm={handleFormOpen}
-          closeForm={handleFormClose}
+          activities={activityStore.activities}
           createOrEdit={handleCreateOrEditActivity}
           deleteActivity={handleDeleteActivity}
           submitting={submitting}
