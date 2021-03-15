@@ -12,12 +12,12 @@ export default observer(function ActivityList() {
     }
 
     const {activityStore} = useStore();
-    const {activities, loading, deleteActivity} = activityStore;
+    const {activitiesByDate, loading, deleteActivity} = activityStore;
 
     return (
         <Segment>
             <Item.Group divided>
-                {activities.map((activity) => 
+                {activitiesByDate.map((activity) => 
                     <Item key={activity.id}>
                         <Item.Content>
                             <Item.Header as='a'>{activity.title}</Item.Header>
