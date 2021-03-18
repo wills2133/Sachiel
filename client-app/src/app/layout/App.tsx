@@ -4,30 +4,40 @@ import { Container } from 'semantic-ui-react';
 import NavBar from './NavBar';
 import ActivityDashboard from '../../features/activities/dashboard/ActivitiyDashboard';
 import { observer } from 'mobx-react-lite';
-import { Route, useLocation } from 'react-router';
+import { Route, Switch, useLocation } from 'react-router';
 import HomePage from '../../features/home/HomePage';
 import ActivityForm from '../../features/activities/form/ActivityForm';
 import ActivitiesDetails from '../../features/activities/dtails/ActivityDetails';
+import TestErrors from '../../features/errors/TestErrors';
+import {ToastContainer} from 'react-toastify'
+import Notfound from '../../features/errors/NotFound';
+import ServerError from '../../features/errors/ServerError';
 
 function App() {
   const location = useLocation();
 
   return (
     <>
-      <Route exact path='/' component={HomePage} />
-      <Route
-        path={'/(.+)'}
-        render={() => (
-          <>
-          <NavBar />
-          <Container style={{margin: '7em'}}>
-            <Route exact path='/activities' component={ActivityDashboard} />
-            <Route path='/activities/:id' component={ActivitiesDetails} />
-            <Route key={location.key} path={['/createActivity', '/manage/:id']} component={ActivityForm} />
-          </Container>
-          </>
-        )}
-      />
+      <ToastContainer position='bottom-right' hideProgressBar />
+        <Route exact path='/' component={HomePage} />
+        <Route
+          path={'/(.+)'}
+          render={() => (
+            <>
+            <NavBar />
+            <Container style={{margin: '7em'}}>
+              <Switch>
+                <Route exact path='/activities' component={ActivityDashboard} /> {/*exact for /a when there is a/id */}
+                <Route path='/activities/:id' component={ActivitiesDetails} />
+                <Route key={location.key} path={['/createActivity', '/manage/:id']} component={ActivityForm} />
+                <Route path='/errors' component={TestErrors} />
+                <Route path='/server-error' component={ServerError} />
+                <Route component={Notfound} />
+              </Switch>
+            </Container>
+            </>
+          )}
+        />
     </>
   );
 }
