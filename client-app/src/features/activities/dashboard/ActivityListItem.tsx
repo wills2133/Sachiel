@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Icon, Item, ItemGroup, Segment, SegmentGroup } from 'semantic-ui-react';
 import { Activity } from '../../../models/activity';
+import {format} from 'date-fns';
 
 interface Props {
     activity: Activity;
@@ -28,7 +29,7 @@ export default function ActivityListItem({activity}: Props) {
             </Segment>
             <Segment>
                 <span>
-                    <Icon name='clock' /> {activity.date}
+                    <Icon name='clock' /> {format(activity.date!, 'dd MMM yyyy hh:mm aa')}
                     <Icon name='marker' /> {activity.venue}
                 </span>
             </Segment>
@@ -46,31 +47,5 @@ export default function ActivityListItem({activity}: Props) {
                 />
             </Segment>
         </SegmentGroup>
-        // <Item key={activity.id}>
-        //     <Item.Content>
-        //         <Item.Header as='a'>{activity.title}</Item.Header>
-        //         <Item.Meta>{activity.date}</Item.Meta>
-        //         <Item.Description>
-        //             <div>{activity.description}</div>
-        //             <div>{activity.city}, {activity.venue}</div>
-        //         </Item.Description>
-        //         <Item.Extra>
-        //             <Button
-        //                 floated='right'
-        //                 content='View'
-        //                 color='blue'
-        //                 as={Link}
-        //                 to={`activities/${activity.id}`} />
-        //             <Button
-        //                 name={activity.id}
-        //                 floated='right'
-        //                 content='Delete'
-        //                 color='red'
-        //                 loading={loading && target === activity.id}
-        //                 onClick={(e) => handleDelete(e, activity.id)} />
-        //             <Label basic content={activity.category} />
-        //         </Item.Extra>
-        //     </Item.Content>
-        // </Item>
     )
 }
