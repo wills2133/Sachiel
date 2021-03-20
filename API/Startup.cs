@@ -60,7 +60,7 @@ namespace API
             // apply the cor policy generated in previous ConfigureServices
             // and apply after UseRouting
             app.UseCors("CorsPolicy");
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
