@@ -45,7 +45,7 @@ export default function TestErrors() {
                 </Button.Group>
             </Segment>
             {error && (
-                <ValidationErrors error={error} />
+                <ValidationErrors errors={error} />
             )}
         </>
     )
