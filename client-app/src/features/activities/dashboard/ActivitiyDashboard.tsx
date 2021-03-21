@@ -14,7 +14,7 @@ export default observer(function ActivityDashboard() {
         if (activityRegistry.size <= 1) loadActivities();
     }, [activityRegistry.size, loadActivities]) // activityStore as depandancy
 
-    if(activityStore.loadingInitial) return <LoadingComponent content = 'Loading App' />;
+    if(activityStore.loadingInitial) return <LoadingComponent content = 'Loading Activities...' />;
 
     
     return (
