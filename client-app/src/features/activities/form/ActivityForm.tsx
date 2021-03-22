@@ -12,23 +12,15 @@ import MyTextArea from '../../../app/common/form/MyTextArea';
 import MySelectInput from '../../../app/common/form/MySelectInput';
 import { categoryOptions } from '../../../app/common/options/categoryOptions';
 import MyDateInput from '../../../app/common/form/MyDateInput';
-import { Activity } from '../../../models/activity';
+import { ActivityFormValues } from '../../../models/activity';
 
 export default observer(function ActivityForm() {
     const history = useHistory();
     const {activityStore} = useStore();
-    const {loading, createActivity, updateActivity, loadActivity, loadingInitial, setLoadingInitial} = activityStore;
+    const {createActivity, updateActivity, loadActivity, loadingInitial, setLoadingInitial} = activityStore;
     const {id} = useParams<{id: string}>();
 
-    const [activity, setActivity] = useState<Activity>({
-        id: '',
-        title: '',
-        date: null,
-        description: '',
-        venue: '',
-        city: '',
-        category: ''
-    });
+    const [activity, setActivity] = useState<ActivityFormValues>(new ActivityFormValues());
 
     const validationSchema = Yup.object({
         title: Yup.string().required('You need to inpt title'),
@@ -41,15 +33,15 @@ export default observer(function ActivityForm() {
 
     useEffect(() => {
         if (id) {
-            loadActivity(id).then(activity => setActivity(activity!));
+            loadActivity(id).then(activity => setActivity(new ActivityFormValues(activity)));
         } else {
             setLoadingInitial(false);
         }
             
     }, [id, loadActivity, setLoadingInitial]);
 
-    function handleFormSubmit(activity: Activity) {
-        if (activity.id.length === 0) {
+    function handleFormSubmit(activity: ActivityFormValues) {
+        if (!activity.id) {
             let newActivity = {
                 ...activity,
                 id: uuid()
@@ -91,7 +83,7 @@ export default observer(function ActivityForm() {
                         <MyTextInput placeholder='city' name='city' />
                         <Button
                             disabled={!isValid || isSubmitting || !dirty}
-                            loading={loading}
+                            loading={isSubmitting}
                             floated='right'
                             positive
                             type='submit'
