@@ -14,6 +14,9 @@ export default function ActivityListItem({activity}: Props) {
     return (
         <SegmentGroup>
             <Segment>
+                {activity.isCancelled && (
+                    <Label attached='top' color='red'  content='Cancelled' style={{textAlign: 'center'}} />
+                )}
                 <ItemGroup>
                     <Item>
                         <Item.Image size='tiny' circular src='/assets/user.png' />
