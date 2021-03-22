@@ -8,7 +8,10 @@ export interface Activity {
   'venue': string;
   'city': string;
   'category': string;
-  'hostUserName': string;
+  'hostUsername': string;
   'isCancelled': boolean;
+  'isGoing'?: boolean;
+  'isHost'?: boolean;
+  'host'?: Profile;
   'attendees'?: Profile[];
 }

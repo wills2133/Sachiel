@@ -28,7 +28,7 @@ export default observer(function ActivitiesDetails() {
                 <ActivityDetailedInfo activity={activity}/>
             </Grid.Column>
             <Grid.Column width={6}>
-                <ActivityDetailedSidebar attendees={activity.attendees!}/>
+                <ActivityDetailedSidebar activity={activity}/>
             </Grid.Column>
         </Grid>
         // <Card fluid>
