@@ -15,7 +15,7 @@ namespace Application.Profiles
         {
             public string Username { get; set; }
         }
-        public class Handler : IRequestHandler<QUery, Result<Profile>>
+        public class Handler : IRequestHandler<Query, Result<Profile>>
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
@@ -25,7 +25,7 @@ namespace Application.Profiles
                 _context = context;
             }
 
-            public async Task<Result<Profile>> Handle(QUery request, CancellationToken cancellationToken)
+            public async Task<Result<Profile>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var user = await _context.Users
                     .ProjectTo<Profile>(_mapper.ConfigurationProvider)
