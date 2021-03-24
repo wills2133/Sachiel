@@ -29,7 +29,7 @@ namespace Infrastructure.Photos
                 var uploadParmas = new ImageUploadParams
                 {
                     File = new FileDescription(file.FileName, stream),
-                    Transformation = new Transformation().Height(500).Width(500).Crop("fill")
+                    Transformation = new Transformation().Height(520).Width(520).Crop("fill")
                 };
 
                 var result = await _cloudinary.UploadAsync(uploadParmas);
