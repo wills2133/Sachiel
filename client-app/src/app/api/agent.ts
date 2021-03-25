@@ -94,6 +94,13 @@ const Account = {
 
 const Profiles = {
     get: (username: string) => request.get<Profile>(`/profiles/${username}`),
+    uplaodPhoto: (file: Blob) => {
+        let formData = new FormData();
+        formData.append('File', file);
+        return axios.post('photos', formData, {
+            headers: {'Content-type': 'multipart/form-data'}
+        })
+    }
 }
 
 const agent = {
