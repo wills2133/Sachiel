@@ -12,7 +12,7 @@ export default function PhotoWidgetDropzone({setFile}: Props) {
     border: 'dashed 3px #eee',
     borderColor: '#eee',
     borderRadius: '5px',
-    paddingTop: '30px',
+    paddingTop: '40px',
     textAlign: 'center' as 'center',
     height: 200
   }

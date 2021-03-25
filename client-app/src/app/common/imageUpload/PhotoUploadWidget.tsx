@@ -26,24 +26,22 @@ export default function PhotoUploadWidget({loading, uploadPhoto}: Props) {
 
     return (
         <Grid>
-            <Grid.Column width={4}>
+            <Grid.Column width={5}>
                 <Header color='teal' content='Step 1 - Add Photos' />
                 <PhotoWidgetDropzone setFile={setFile} />
             </Grid.Column>
-            <Grid.Column width={1} />
-            <Grid.Column width={4} style={{margin: 0, padding: 0 }} >
+            <Grid.Column width={5}>
                 <Header color='teal' content='Step 2 - Resize Image' />
                 {files && files.length > 0 && (
                     <PhotoWidgetCropper setCropper={setCropper} imagePreview={files[0].preview} />
                 )}
             </Grid.Column>
-            <Grid.Column width={1} />
-            <Grid.Column width={4}>
+            <Grid.Column width={5}>
                 <Header color='teal' content='Step 3 - Preview & Upload' />
                 {files && files.length > 0 && (
                     <>
-                        <div className='img-preview' style={{minHeight: 200, overflow: 'hidden'}} />
-                        <Button.Group widths={2}>
+                        <div className='img-preview' style={{minHeight: 200, width: '100%', overflow: 'hidden'}} />
+                        <Button.Group size='tiny' style={{width: 200}}>
                             <Button loading={loading} onClick={onCrop} positive icon='check' />
                             <Button disabled={loading} onClick={() => setFile([])}  icon='close' />
                         </Button.Group>

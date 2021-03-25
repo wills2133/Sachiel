@@ -11,7 +11,7 @@ interface Props {
 
 export default observer(function ProfilePhotos({profile}: Props) {
     const {profileStore: {isCurrentUser, uploadPhoto, uploadingPhoto, setMain, deletePhoto, loadingPhoto}} = useStore();
-    const [addPhotoMode, setAddPhotoMode] = useState(false);
+    const [addPhotoMode, setAddPhotoMode] = useState(true);
     const [target, setTarget] = useState('');
 
     function handlePhotoUpload(file: Blob) {
@@ -36,7 +36,7 @@ export default observer(function ProfilePhotos({profile}: Props) {
                     {isCurrentUser && (
                         <Button
                             floated='right'
-                            content={addPhotoMode ? 'Cancle' : 'Add Photo'}
+                            content={addPhotoMode ? 'Cancel' : 'Add Photo'}
                             onClick={() => setAddPhotoMode(!addPhotoMode)}
                         />
                     )}
