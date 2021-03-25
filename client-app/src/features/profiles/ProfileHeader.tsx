@@ -1,5 +1,4 @@
 import { observer } from 'mobx-react-lite';
-import { profile } from 'node:console';
 import React from 'react';
 import { Button, Divider, Grid, Header, Item, Reveal, Segment, Statistic } from 'semantic-ui-react';
 import { Profile } from '../../models/profile';

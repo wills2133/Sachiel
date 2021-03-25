@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default observer(function ProfilePhotos({profile}: Props) {
-    const {profileStore: {isCurrentUser, uploadPhoto, uploadingPhoto, setMain, loadingPhoto}} = useStore();
+    const {profileStore: {isCurrentUser, uploadPhoto, uploadingPhoto, setMain, deletePhoto, loadingPhoto}} = useStore();
     const [addPhotoMode, setAddPhotoMode] = useState(false);
     const [target, setTarget] = useState('');
 
@@ -21,6 +21,11 @@ export default observer(function ProfilePhotos({profile}: Props) {
     function handleSetMainPhoto(photo: Photo, e:SyntheticEvent<HTMLButtonElement>) {
         setTarget(e.currentTarget.name);
         setMain(photo);
+    } // to get conlick button name
+
+    function handleSetDeletePhoto(photo: Photo, e:SyntheticEvent<HTMLButtonElement>) {
+        setTarget(e.currentTarget.name);
+        deletePhoto(photo);
     }
 
     return (
@@ -50,12 +55,19 @@ export default observer(function ProfilePhotos({profile}: Props) {
                                                     basic
                                                     color='green'
                                                     content='Main'
-                                                    name={photo.id}
-                                                    disabled={photo.isMain}
-                                                    loading={target==photo.id && loadingPhoto}
+                                                    name={'setMain'+photo.id}
+                                                    disabled={loadingPhoto || photo.isMain}
+                                                    loading={target==='setMain'+photo.id && loadingPhoto}
                                                     onClick={e => handleSetMainPhoto(photo, e)}
                                                 />
-                                                <Button color='red' icon='trash' />
+                                                <Button
+                                                    name={'deletion'+photo.id}
+                                                    disabled={loadingPhoto || photo.isMain}
+                                                    color='red'
+                                                    icon='trash'
+                                                    onClick={e => handleSetDeletePhoto(photo, e)}
+                                                    loading={target==='deletion'+photo.id && loadingPhoto}
+                                                />
                                             </Button.Group>
                                         )}
                                     </Card>
