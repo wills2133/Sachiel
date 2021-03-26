@@ -22,10 +22,11 @@ namespace API.SignalR
                 .SendAsync("ReceivedComment", comment.Value); //send to grouped clents
         }
 
-        public async override Task OnConnectedAsync()
+        public override async Task OnConnectedAsync()
         {
             var httpContet = Context.GetHttpContext();
             var activityId = httpContet.Request.Query["activityId"];
+            System.Diagnostics.Debug.WriteLine($"---------------{activityId}");
             await Groups.AddToGroupAsync(Context.ConnectionId, activityId);
             var result = await _mediator.Send(new List.Query{ActivityId = Guid.Parse(activityId)});
             await Clients.Caller.SendAsync("LoadComments", result.Value);
