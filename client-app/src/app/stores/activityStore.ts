@@ -4,6 +4,7 @@ import agent from '../api/agent';
 import {format} from 'date-fns';
 import { store } from './store';
 import { Profile } from '../../models/profile';
+import { Pagination, PagingParams } from '../../models/pagination';
 
 export default class ActivityStore {
     // activities: Activity[] = [];
@@ -13,6 +14,9 @@ export default class ActivityStore {
     loading = false;
     submitting = false;
     loadingInitial = true;
+    pagination: Pagination | null = null;
+    pagingParams = new PagingParams();
+
     constructor() {
         makeAutoObservable(this)
     }
@@ -37,10 +41,11 @@ export default class ActivityStore {
     loadActivities = async () => {
         this.loadingInitial = true;
         try {
-            const activities = await agent.Activities.list();
-            activities.forEach((activity) => {
+            const result = await agent.Activities.list(this.pagingParams);
+            result.data.forEach((activity) => {
                 this.setActivity(activity);
             })
+            this.setPagination(result.pagination);
             this.setLoadingInitial(false); //make it a function rather than manipulating a property in async
         } catch(error) {
             console.log(error)
@@ -50,6 +55,13 @@ export default class ActivityStore {
 
     setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;
+    }
+    
+    setPagingParams = (pagingParams: PagingParams) => {
+        this.pagingParams = pagingParams;
+    }
+    setPagination = (pagination: Pagination) => {
+        this.pagination = pagination;
     }
 
     loadActivity = async (id: string) => {
