@@ -103,6 +103,7 @@ const Profiles = {
     },
     setMain: (id: string) => request.post(`/photos/${id}/setMain`, {}),
     deletePhoto: (id: string) => request.del(`/photos/${id}`),
+    updateFollowing: (username: string) => request.post(`/follow/${username}`, {}),
 }
 
 const agent = {
