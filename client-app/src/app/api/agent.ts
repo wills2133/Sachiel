@@ -1,4 +1,4 @@
-import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
+import axios, {AxiosError, AxiosResponse} from 'axios';
 import { toast } from 'react-toastify';
 import { history } from '../..';
 import { Activity, ActivityFormValues } from '../../models/activity';
@@ -33,7 +33,7 @@ axios.interceptors.request.use(config => {
 
 axios.interceptors.response.use(async (response) => {
     await sleep(1000);
-    const pagination = response.headers['pagination'];
+    const pagination = JSON.parse(response.headers['pagination']);
     if (pagination) {
         response.data = new PaginatedResult(response.data, pagination);
         return response as AxiosResponse<PaginatedResult<any>>;
