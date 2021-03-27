@@ -1,17 +1,11 @@
 import { observer } from 'mobx-react-lite';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Card, Grid, Header, Tab } from 'semantic-ui-react';
 import { useStore } from '../../app/stores/store';
 import ProfileCard from './ProfileCard';
 
 export default observer(function ProfileFollowing() {
-    const {profileStore:{
-        loadingFollowing, profile, followings, loadFollowings
-    }} = useStore();
-
-    useEffect(() => {
-        loadFollowings('followings');
-    }, [loadFollowings])
+    const {profileStore:{ loadingFollowing, profile, followings, activeTab }} = useStore();
 
     return (
         <Tab.Pane loading={loadingFollowing}>
@@ -20,7 +14,10 @@ export default observer(function ProfileFollowing() {
                     <Header
                         floated='left'
                         icon='user'
-                        content={`People following ${profile?.displayName}`}
+                        content={activeTab === 3
+                            ? `People following ${profile?.displayName}`
+                            : `People ${profile?.displayName} following`
+                        }
                     />
                 </Grid.Column>
                 <Grid.Column width={16}>

@@ -1,6 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react';
 import { Tab } from 'semantic-ui-react';
+import { useStore } from '../../app/stores/store';
 import { Profile } from '../../models/profile';
 import ProfileFollowing from './ProfileFollowing';
 import ProfilePhotos from './ProfilePhotos';
@@ -10,6 +11,7 @@ interface Props {
 }
 
 export default observer(function ProfileContent({profile}: Props) {
+    const {profileStore} = useStore();
 
     const panes = [
         {menuItem: 'About', render: () => <Tab.Pane>About Content</Tab.Pane>},
@@ -21,6 +23,7 @@ export default observer(function ProfileContent({profile}: Props) {
 
     return (
         <Tab
+            onTabChange={(e, data) => profileStore.setActiveTab(data.activeIndex)}
             menu={{fluid: true, vertical:true}}
             menuPosition='right'
             panes={panes}
