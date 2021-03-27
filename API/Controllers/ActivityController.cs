@@ -15,9 +15,9 @@ namespace API.Controllers
     {
 
         [HttpGet]
-        public async Task<IActionResult> GetActivities()
+        public async Task<IActionResult> GetActivities([FromQuery]PagingParams urlParams)
         {
-            return HandleResult(await Mediator.Send(new List.Query()));
+            return HandlePageResult(await Mediator.Send(new List.Query{Params = urlParams}));
         }
 
         [HttpGet("{id}")] // BaseUrl/GetActivities/{id} => get id => pass to Id
