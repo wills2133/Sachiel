@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import React from 'react'
 import { Link } from 'react-router-dom';
-import {Button, Header, Item, Segment, Image, Label} from 'semantic-ui-react'
+import {Button, Header, Segment, Image, Label} from 'semantic-ui-react'
 import {Activity} from "../../../models/activity";
 import {format} from 'date-fns';
 import { useStore } from '../../../app/stores/store';
@@ -36,21 +36,15 @@ export default observer (function ActivityDetailedHeader({activity}: Props) {
                 )}
                 <Image src={`/assets/categoryImages/${activity.category}.jpg`} fluid style={activityImageStyle}/>
                 <Segment style={activityImageTextStyle} basic>
-                    <Item.Group>
-                        <Item>
-                            <Item.Content>
-                                <Header
-                                    size='huge'
-                                    content={activity.title}
-                                    style={{color: 'white'}}
-                                />
-                                <p>{format(activity.date!, 'dd MMM yyyy hh:mm aa')}</p>
-                                <p>
-                                    Hosted by <strong><Link to={`/profiles/${activity.host?.username}`}>{activity.host?.displayName}</Link></strong>
-                                </p>
-                            </Item.Content>
-                        </Item>
-                    </Item.Group>
+                    <Header
+                        size='huge'
+                        content={activity.title}
+                        style={{color: 'white'}}
+                    />
+                    <p>{format(activity.date!, 'dd MMM yyyy hh:mm aa')}</p>
+                    <p>
+                        Hosted by <strong><Link to={`/profiles/${activity.host?.username}`}>{activity.host?.displayName}</Link></strong>
+                    </p>
                 </Segment>
             </Segment>
             <Segment clearing attached='bottom'>

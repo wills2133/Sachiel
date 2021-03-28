@@ -3,6 +3,8 @@ import { HubConnection, HubConnectionBuilder, LogLevel } from '@microsoft/signal
 import { makeAutoObservable, runInAction } from "mobx";
 import { store } from "./store";
 
+const chatUrl = process.env.REACT_APP_CHAT_URL
+
 export default class CommentStore {
     comments: ChatComment[] = [];
     hubConnection: HubConnection | null = null;
@@ -14,7 +16,7 @@ export default class CommentStore {
     createHubConnection = (activityId: string) => {
         if (store.activityStore.selectedActivity) {
             this.hubConnection = new HubConnectionBuilder()
-                .withUrl(`http://localhost:5000/chat?activityId=${activityId}`, {
+                .withUrl(`${chatUrl}?activityId=${activityId}`, {
                     accessTokenFactory: () => store.userStore.user?.token!
                 })
                 .withAutomaticReconnect()
