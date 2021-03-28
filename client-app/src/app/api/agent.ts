@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { history } from '../..';
 import { Activity, ActivityFormValues } from '../../models/activity';
 import { PaginatedResult } from '../../models/pagination';
-import { Profile } from '../../models/profile';
+import { Profile, UserActivity } from '../../models/profile';
 import { User, UserFormValues } from '../../models/user';
 import { store } from '../stores/store';
 
@@ -113,6 +113,9 @@ const Profiles = {
     updateFollowing: (username: string) => request.post(`/follow/${username}`, {}),
     getFollowings: (username: string, predicate: string) =>
         request.get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
+    listActivity: (username: string, params: URLSearchParams) =>
+        axios.get<UserActivity[]>(`/profiles/${username}/activities`, {params}).then(responseBody),
+    
 }
 
 const agent = {

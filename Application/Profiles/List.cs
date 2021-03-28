@@ -33,7 +33,7 @@ namespace Application.Profiles
                 var query = _context.Activities
                     .Where(o => o.Attendees.Any(a => a.AppUser.UserName == request.Username))
                     .OrderBy(d => d.Date)
-                    .ProjectTo<UserActivityDto>(_mapper.ConfigurationProvider)
+                    .ProjectTo<UserActivityDto>(_mapper.ConfigurationProvider) // project the host among the attendee in UserActivityDto
                     .AsQueryable();
                 
                 if (request.Params.StartDate != DateTime.MinValue)
@@ -43,6 +43,10 @@ namespace Application.Profiles
                 if (request.Params.EndDate != DateTime.MinValue)
                 {
                     query = query.Where(d => d.Date < request.Params.EndDate);
+                }
+                if (request.Params.IsHost)
+                {
+                    query = query.Where(o => o.HostUsername == request.Username);
                 }
 
                 return Result<PageList<UserActivityDto>>.Success(

@@ -14,7 +14,7 @@ namespace API.Controllers
         [HttpGet("{userName}/activities")]
         public async Task<IActionResult> GetUserActivities([FromQuery]UserActivityParams urlParams, string userName)
         {
-            return HandlePageResult(await Mediator.Send(new List.Query{Params = urlParams, Username = userName}));
+            return HandleResult(await Mediator.Send(new List.Query{Params = urlParams, Username = userName}));
         }
 
     }
