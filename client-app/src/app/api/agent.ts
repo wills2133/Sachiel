@@ -2,7 +2,7 @@ import axios, {AxiosError, AxiosResponse} from 'axios';
 import { toast } from 'react-toastify';
 import { history } from '../..';
 import { Activity, ActivityFormValues } from '../../models/activity';
-import { PaginatedResult, PagingParams } from '../../models/pagination';
+import { PaginatedResult } from '../../models/pagination';
 import { Profile } from '../../models/profile';
 import { User, UserFormValues } from '../../models/user';
 import { store } from '../stores/store';
@@ -84,7 +84,7 @@ const request = {
 }
 
 const Activities = {
-    list: (parmas: PagingParams) => axios.get<PaginatedResult<Activity[]>>('/activities', {params: parmas})
+    list: (params: URLSearchParams) => axios.get<PaginatedResult<Activity[]>>('/activities', {params})
         .then(responseBody),
     details: (id: string) => request.get<Activity>(`/activities/${id}`),
     create: (activity: ActivityFormValues) => request.post<void>('/activities', activity),
