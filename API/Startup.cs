@@ -100,7 +100,7 @@ namespace API
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<ChatHub>("/chat");
-                // endpoints.MapFallbackToController("Index", "Fallback"); // ignore route not serve by api server and redirect to froentend
+                endpoints.MapFallbackToController("Index", "Fallback"); // ignore route not serve by api server and redirect to froentend
                 // http://localhost:5000/errors is not working any more
             });
         }
