@@ -58,13 +58,13 @@ namespace API
             app.UseReferrerPolicy(opt => opt.NoReferrer());
             app.UseXXssProtection(opt => opt.EnabledWithBlockMode());
             app.UseXfo(opt => opt.Deny());
-            app.UseCsp(opt => opt
+            app.UseCspReportOnly(opt => opt
                 .BlockAllMixedContent()
                 .StyleSources(s => s.Self().CustomSources("https://fonts.googleapis.com"))
                 .FontSources(s => s.Self().CustomSources("https://fonts.gstatic.com", "data:"))
                 .FormActions(s => s.Self())
                 .FrameAncestors(s => s.Self())
-                .ImageSources(s => s.Self().CustomSources("https://res.cloudinary.com", "data:"))
+                .ImageSources(s => s.Self().CustomSources("https://res.cloudinary.com", "data:", "https://res.cloudinary.com/"))
                 .ScriptSources(s => s.Self().CustomSources("sha256-u4qrUfAHW1wvPPkqAaRgAv7FWGmo8g66aTT+e/bdvkY="))
             );
 
